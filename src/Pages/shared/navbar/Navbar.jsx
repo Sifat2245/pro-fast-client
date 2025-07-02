@@ -15,6 +15,9 @@ const Navbar = () => {
         <NavLink to={"/coverage"}>Coverage</NavLink>
       </li>
       <li>
+        <NavLink to={"/send-parcel"}>Send A Parcel</NavLink>
+      </li>
+      <li>
         <NavLink to={"/pricing"}>Pricing</NavLink>
       </li>
       <li>
@@ -58,7 +61,7 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         <Link to={"/login"}>
-          <a className="btn">Login</a>
+          <button className="btn">Login</button>
         </Link>
       </div>
     </div>

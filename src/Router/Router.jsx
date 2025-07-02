@@ -9,6 +9,8 @@ import AboutUs from "../Pages/AboutUs/AboutUs";
 import Coverage from "../Pages/Coverage/Coverage";
 import Pricing from "../Pages/Pricing/Pricing";
 import BecomeRider from "../Pages/BecomeRider/BecomeRider";
+import PrivateRoute from "../Routes/PrivateRoute";
+import SendParcel from "../Pages/Send parcel/SendParcel";
 
 export const router = createBrowserRouter([
     {
@@ -35,6 +37,13 @@ export const router = createBrowserRouter([
             {
                 path: '/become-rider',
                 Component: BecomeRider
+            },
+            {
+                path: '/send-parcel',
+                element: <PrivateRoute>
+                    <SendParcel></SendParcel>
+                </PrivateRoute>,
+                loader: () => fetch('./warehouses.json')
             }
         ]
     },
