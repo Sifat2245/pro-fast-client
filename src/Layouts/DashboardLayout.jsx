@@ -1,18 +1,24 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { NavLink, Outlet } from "react-router";
 import { Menu, X } from "lucide-react";
 import ProFastLogo from "../Pages/shared/ProfastLogo/ProFastLogo";
+import {
+  FaBoxOpen,
+  FaMoneyCheckAlt,
+  FaUserEdit,
+  FaMapMarkedAlt,
+} from "react-icons/fa";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-//   const location = useLocation();
-//   const navigate = useNavigate();
+  //   const location = useLocation();
+  //   const navigate = useNavigate();
 
-//   useEffect(() => {
-//     if (location.pathname === "/dashboard") {
-//       navigate("/dashboard/my-parcels", { replace: true });
-//     }
-//   }, [location, navigate]);
+  //   useEffect(() => {
+  //     if (location.pathname === "/dashboard") {
+  //       navigate("/dashboard/my-parcels", { replace: true });
+  //     }
+  //   }, [location, navigate]);
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
@@ -40,17 +46,65 @@ const DashboardLayout = () => {
           <nav className="flex flex-col gap-3">
             <NavLink
               to="my-parcels"
-          
               onClick={() => setSidebarOpen(false)}
               className={({ isActive }) =>
-                `block px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
                   isActive
                     ? "bg-[#CAEB66] text-black font-semibold"
                     : "text-white"
                 }`
               }
             >
-              My Parcels
+              <FaBoxOpen className="text-lg" />
+              <span className="">My Parcels</span>
+            </NavLink>
+
+            {/* Payment History */}
+            <NavLink
+              to="paymentHistory"
+              onClick={() => setSidebarOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                  isActive
+                    ? "bg-[#CAEB66] text-black font-semibold"
+                    : "text-white"
+                }`
+              }
+            >
+              <FaMoneyCheckAlt className="text-lg" />
+              <span className="">Payment History</span>
+            </NavLink>
+
+            {/* Track Parcel */}
+            <NavLink
+              to="tracking"
+              onClick={() => setSidebarOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                  isActive
+                    ? "bg-[#CAEB66] text-black font-semibold"
+                    : "text-white"
+                }`
+              }
+            >
+              <FaMapMarkedAlt className="text-lg" />
+              <span className="">Track Parcel</span>
+            </NavLink>
+
+            {/* Update Profile */}
+            <NavLink
+              to="update-profile"
+              onClick={() => setSidebarOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                  isActive
+                    ? "bg-[#CAEB66] text-black font-semibold"
+                    : "text-white"
+                }`
+              }
+            >
+              <FaUserEdit className="text-lg" />
+              <span className="">Update Profile</span>
             </NavLink>
             {/* Add more links later */}
           </nav>
@@ -63,15 +117,65 @@ const DashboardLayout = () => {
         <nav className="flex flex-col gap-3">
           <NavLink
             to="my-parcels"
+            onClick={() => setSidebarOpen(false)}
             className={({ isActive }) =>
-              `block px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+              `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
                 isActive
                   ? "bg-[#CAEB66] text-black font-semibold"
                   : "text-white"
               }`
             }
           >
-            My Parcels
+            <FaBoxOpen className="text-lg" />
+            <span className="">My Parcels</span>
+          </NavLink>
+
+          {/* Payment History */}
+          <NavLink
+            to="paymentHistory"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) =>
+              `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                isActive
+                  ? "bg-[#CAEB66] text-black font-semibold"
+                  : "text-white"
+              }`
+            }
+          >
+            <FaMoneyCheckAlt className="text-lg" />
+            <span className="">Payment History</span>
+          </NavLink>
+
+          {/* Track Parcel */}
+          <NavLink
+            to="tracking"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) =>
+              `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                isActive
+                  ? "bg-[#CAEB66] text-black font-semibold"
+                  : "text-white"
+              }`
+            }
+          >
+            <FaMapMarkedAlt className="text-lg" />
+            <span className="">Track Parcel</span>
+          </NavLink>
+
+          {/* Update Profile */}
+          <NavLink
+            to="update-profile"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) =>
+              `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                isActive
+                  ? "bg-[#CAEB66] text-black font-semibold"
+                  : "text-white"
+              }`
+            }
+          >
+            <FaUserEdit className="text-lg" />
+            <span className="">Update Profile</span>
           </NavLink>
         </nav>
       </aside>

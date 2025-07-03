@@ -14,6 +14,10 @@ import SendParcel from "../Pages/Send parcel/SendParcel";
 import DashboardLayout from "../Layouts/DashboardLayout";
 import MyParcels from "../Pages/Dashboard/MyParcels";
 import Payment from "../Pages/Dashboard/payment/Payment";
+import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
+import ParcelTracking from "../Pages/Dashboard/ParcelTracking";
+import UpdateProfile from "../Pages/Dashboard/UpdateProfile";
+
 
 export const router = createBrowserRouter([
     {
@@ -79,8 +83,20 @@ export const router = createBrowserRouter([
                 Component: MyParcels
             },
             {
-                path: 'payment/:id',
+                path: 'payment/:parcelId',
                 Component: Payment
+            },
+            {
+                path: 'paymentHistory',
+                Component: PaymentHistory
+            },
+            {
+                path:'tracking',
+                Component: ParcelTracking
+            },
+            {
+                path: 'update-profile',
+                Component: UpdateProfile
             }
         ]
     }
