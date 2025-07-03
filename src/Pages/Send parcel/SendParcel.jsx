@@ -22,11 +22,10 @@ const SendParcel = () => {
     watch,
     control,
     setValue,
-    formState: { errors },
   } = useForm();
 
   const [isDocument, setIsDocument] = useState(true);
-  const watchType = watch("type", "document");
+  // const watchType = watch("type", "document");
   const watchSenderRegion = watch("senderRegion");
   const watchReceiverRegion = watch("receiverRegion");
 

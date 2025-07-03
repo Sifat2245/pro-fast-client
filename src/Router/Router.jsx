@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import MainLayout from "../Layouts/MainLayout";
 import Home from "../Pages/Home/Home/Home";
 import AuthLayout from "../Layouts/AuthLayout";
@@ -11,6 +11,9 @@ import Pricing from "../Pages/Pricing/Pricing";
 import BecomeRider from "../Pages/BecomeRider/BecomeRider";
 import PrivateRoute from "../Routes/PrivateRoute";
 import SendParcel from "../Pages/Send parcel/SendParcel";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import MyParcels from "../Pages/Dashboard/MyParcels";
+import Payment from "../Pages/Dashboard/payment/Payment";
 
 export const router = createBrowserRouter([
     {
@@ -62,6 +65,22 @@ export const router = createBrowserRouter([
             {
                 path: '/forget-password',
                 Component: ForgetPass
+            }
+        ]
+    },
+    {
+        path: '/dashboard',
+        element: <PrivateRoute>
+            <DashboardLayout></DashboardLayout>
+        </PrivateRoute>,
+        children:[
+            {
+                path:'my-parcels',
+                Component: MyParcels
+            },
+            {
+                path: 'payment/:id',
+                Component: Payment
             }
         ]
     }
