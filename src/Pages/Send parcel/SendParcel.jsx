@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthContext";
 import { useLoaderData } from "react-router";
-import userAxiosSecure from "../../Hooks/userAxiosSecure";
+import useAxiosSecure from "../../Hooks/userAxiosSecure";
 
 const generateTrackingId = () => {
   const timestamp = Date.now().toString().slice(-6); // last 6 digits of timestamp
@@ -14,7 +14,7 @@ const generateTrackingId = () => {
 const SendParcel = () => {
   const { user } = useContext(AuthContext);
   const warehouseData = useLoaderData();
-  const axiosSecure = userAxiosSecure();
+  const axiosSecure = useAxiosSecure();
 
   const {
     register,

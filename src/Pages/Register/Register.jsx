@@ -1,9 +1,14 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import useAuth from "../../Hooks/useAuth";
+import axios from "axios";
+import { useState } from "react";
+import useAxios from "../../Hooks/useAxios";
 
 const Register = () => {
-  const { createUser, signInWithGoogle } = useAuth();
+  const { createUser, signInWithGoogle, updateUser } = useAuth();
+  const [profileImage, setProfileImage] = useState("");
+  const axiosInstance = useAxios();
 
   const {
     register,
@@ -16,8 +21,33 @@ const Register = () => {
     console.log(data);
 
     createUser(data.email, data.password)
-      .then((result) => {
+      .then(async (result) => {
         console.log(result.user);
+
+        //update user profile in firebase
+        const userProfile = {
+          displayName: data.name,
+          photoURL: profileImage,
+        };
+        updateUser(userProfile)
+          .then(() => {
+            console.log("profile name and image updated");
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+
+        const userInfo = {
+          email: data.email,
+          displayName: data.name,
+          photoURL: profileImage,
+          role: "user", //default role
+          created_at: new Date().toISOString(),
+          last_log_in: new Date().toISOString(),
+        };
+
+        const userRes = await axiosInstance.post("/users", userInfo);
+        console.log(userRes.data);
       })
       .catch((error) => {
         console.log(error.message);
@@ -26,12 +56,37 @@ const Register = () => {
 
   const googleLogin = () => {
     signInWithGoogle()
-      .then((result) => {
+      .then(async(result) => {
         console.log(result.user);
+        const user=  result.user
+
+         const userInfo = {
+          email: user.email,
+          displayName: user.displayName,
+          role: "user", //default role
+          created_at: new Date().toISOString(),
+          last_log_in: new Date().toISOString(),
+        };
+
+         const res = await axiosInstance.post("/users", userInfo);
+        console.log(res.data);
+
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleImageUpload = async (e) => {
+    const image = e.target.files[0];
+    console.log(image);
+    const formData = new FormData();
+    formData.append("image", image);
+    const imageURL = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_image_upload_key
+    }`;
+    const res = await axios.post(imageURL, formData);
+    setProfileImage(res.data.data.url);
   };
 
   const password = watch("password");
@@ -58,7 +113,31 @@ const Register = () => {
               <p className="text-red-500 mt-1">{errors.name.message}</p>
             )}
           </div>
+          {/* image */}
+          <div>
+            <label className="block text-lg font-semibold mb-2">
+              Image Upload
+            </label>
 
+            <div className="relative w-full">
+              <input
+                type="file"
+                id="file-upload"
+                onChange={handleImageUpload}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+              <label
+                htmlFor="file-upload"
+                className="flex items-center justify-center w-full h-14 bg-white border border-gray-300 rounded-lg shadow-sm text-gray-700 text-lg cursor-pointer hover:bg-gray-50 transition"
+              >
+                Choose File
+              </label>
+            </div>
+
+            {errors.name && (
+              <p className="text-red-500 mt-1">{errors.name.message}</p>
+            )}
+          </div>
           {/* Email */}
           <div>
             <label className="block text-lg font-semibold mb-2">Email</label>

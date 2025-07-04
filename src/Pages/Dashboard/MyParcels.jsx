@@ -1,15 +1,17 @@
 import React from "react";
 import useAuth from "../../Hooks/useAuth";
-import userAxiosSecure from "../../Hooks/userAxiosSecure";
+
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import useAxiosSecure from "../../Hooks/userAxiosSecure";
 
 const MyParcels = () => {
   const { user } = useAuth();
-  const axiosSecure = userAxiosSecure();
+  const axiosSecure = useAxiosSecure()
   const navigate = useNavigate()
+
   const {
     data: parcels = [],
     isLoading,
@@ -17,7 +19,7 @@ const MyParcels = () => {
   } = useQuery({
     queryKey: ["/my-parcels", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`parcels?email=${user?.email}`);
+      const res = await axiosSecure.get(`/parcels?email=${user?.email}`);
       return res.data;
     },
   });
@@ -41,7 +43,7 @@ const MyParcels = () => {
           refetch(); // refresh list
         }
       } catch (err) {
-        Swal.fire("Error", "Failed to delete parcel.", "error");
+        Swal.fire("Error", "Failed to delete parcel.", err);
       }
     }
   };
