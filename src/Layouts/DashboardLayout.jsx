@@ -9,6 +9,7 @@ import {
   FaMapMarkedAlt,
   FaClipboardList,
   FaMotorcycle,
+  FaUserShield,
 } from "react-icons/fa";
 
 const DashboardLayout = () => {
@@ -224,6 +225,20 @@ const DashboardLayout = () => {
           >
             <FaMotorcycle className="text-lg" />
             <span>Deactivated Riders</span>
+          </NavLink>
+          <NavLink
+            to="manage-admins"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) =>
+              `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                isActive
+                  ? "bg-[#CAEB66] text-black font-semibold"
+                  : "text-white"
+              }`
+            }
+          >
+            <FaUserShield className="text-lg" />
+            <span>Manage Admins</span>
           </NavLink>
         </nav>
       </aside>

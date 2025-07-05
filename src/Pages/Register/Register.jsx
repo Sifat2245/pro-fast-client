@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 import axios from "axios";
 import { useState } from "react";
@@ -9,6 +9,9 @@ const Register = () => {
   const { createUser, signInWithGoogle, updateUser } = useAuth();
   const [profileImage, setProfileImage] = useState("");
   const axiosInstance = useAxios();
+  const location = useLocation()
+  const navigate = useNavigate()
+  const from = location.state || '/';
 
   const {
     register,
@@ -32,6 +35,7 @@ const Register = () => {
         updateUser(userProfile)
           .then(() => {
             console.log("profile name and image updated");
+            navigate(from)
           })
           .catch((error) => {
             console.log("error", error);

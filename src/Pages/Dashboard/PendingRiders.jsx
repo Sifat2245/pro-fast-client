@@ -20,8 +20,8 @@ const PendingRiders = () => {
     },
   });
 
-  const handleApprove = (id) => {
-    axiosSecure.patch(`/riders/${id}/status`, {status: 'active'}).then((res) => {
+  const handleApprove = (id, email) => {
+    axiosSecure.patch(`/riders/${id}/status`, {status: 'active', email}).then((res) => {
       if (res.data.modifiedCount > 0) {
         Swal.fire("Approved!", "Rider has been approved.", "success");
         refetch();
@@ -88,7 +88,7 @@ const PendingRiders = () => {
                     <FaEye />
                   </button>
                   <button
-                    onClick={() => handleApprove(rider._id)}
+                    onClick={() => handleApprove(rider._id, rider.email)}
                     className="btn btn-sm bg-green-500 text-white"
                     title="Approve"
                   >

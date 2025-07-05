@@ -20,6 +20,7 @@ import UpdateProfile from "../Pages/Dashboard/UpdateProfile";
 import PendingRiders from "../Pages/Dashboard/PendingRiders";
 import ActiveRiders from "../Pages/Dashboard/ActiveRiders";
 import InactiveRiders from "../Pages/Dashboard/InactiveRiders";
+import ManageAdmins from "../Pages/Dashboard/ManageAdmins";
 
 export const router = createBrowserRouter([
   {
@@ -120,6 +121,10 @@ export const router = createBrowserRouter([
       {
         path: "inactive-riders",
         Component: InactiveRiders,
+      },
+      {
+        path: "manage-admins",
+        Component: ManageAdmins,
       },
     ],
   },
