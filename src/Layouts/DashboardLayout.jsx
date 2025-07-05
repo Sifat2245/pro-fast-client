@@ -7,6 +7,8 @@ import {
   FaMoneyCheckAlt,
   FaUserEdit,
   FaMapMarkedAlt,
+  FaClipboardList,
+  FaMotorcycle,
 } from "react-icons/fa";
 
 const DashboardLayout = () => {
@@ -176,6 +178,52 @@ const DashboardLayout = () => {
           >
             <FaUserEdit className="text-lg" />
             <span className="">Update Profile</span>
+          </NavLink>
+
+          {/* riders */}
+
+          <NavLink
+            to="pending-applications"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) =>
+              `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                isActive
+                  ? "bg-[#CAEB66] text-black font-semibold"
+                  : "text-white"
+              }`
+            }
+          >
+            <FaClipboardList className="text-lg" />
+            <span>Pending Applications</span>
+          </NavLink>
+
+          <NavLink
+            to="active-riders"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) =>
+              `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                isActive
+                  ? "bg-[#CAEB66] text-black font-semibold"
+                  : "text-white"
+              }`
+            }
+          >
+            <FaMotorcycle className="text-lg" />
+            <span>Active Riders</span>
+          </NavLink>
+          <NavLink
+            to="inactive-riders"
+            onClick={() => setSidebarOpen(false)}
+            className={({ isActive }) =>
+              `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                isActive
+                  ? "bg-[#CAEB66] text-black font-semibold"
+                  : "text-white"
+              }`
+            }
+          >
+            <FaMotorcycle className="text-lg" />
+            <span>Deactivated Riders</span>
           </NavLink>
         </nav>
       </aside>
