@@ -11,6 +11,7 @@ import {
   FaMotorcycle,
   FaUserShield,
   FaUserPlus,
+  FaTruckLoading,
 } from "react-icons/fa";
 import useUserRole from "../Hooks/useUserRole";
 
@@ -105,7 +106,7 @@ const DashboardLayout = () => {
               <span className="">Update Profile</span>
             </NavLink>
 
-            {/* riders */}
+            {/* only for admin */}
 
             {!roleLoading && role === "admin" && (
               <>
@@ -254,7 +255,26 @@ const DashboardLayout = () => {
             <span className="">Update Profile</span>
           </NavLink>
 
-          {/* riders */}
+          {!roleLoading && role === "rider" && (
+            <>
+              <NavLink
+                to="pending-deliveries"
+                onClick={() => setSidebarOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                    isActive
+                      ? "bg-[#CAEB66] text-black font-semibold"
+                      : "text-white"
+                  }`
+                }
+              >
+                <FaTruckLoading className="text-lg" />
+                <span>Pending Deliveries</span>
+              </NavLink>
+            </>
+          )}
+
+          {/* only for admin */}
 
           {!roleLoading && role === "admin" && (
             <>

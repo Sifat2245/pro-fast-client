@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthContext";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import useAxiosSecure from "../../Hooks/userAxiosSecure";
 
 const generateTrackingId = () => {
@@ -15,6 +15,7 @@ const SendParcel = () => {
   const { user } = useContext(AuthContext);
   const warehouseData = useLoaderData();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate()
 
   const {
     register,
@@ -153,9 +154,11 @@ const SendParcel = () => {
               "Parcel created successfully. Redirecting to payment...",
               "success"
             );
+
+            navigate('/dashboard/my-parcels')
           }
         });
-
+        
         // Place payment redirection or DB call here
       }
     });
@@ -220,7 +223,7 @@ const SendParcel = () => {
         <div>
           <h3 className="text-xl font-semibold mb-2">Sender Info</h3>
           <input
-            defaultValue={user?.name}
+            defaultValue={user?.displayName}
             {...register("senderName", { required: true })}
             placeholder="Name"
             className="input input-bordered w-full mb-2"

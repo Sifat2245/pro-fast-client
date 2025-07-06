@@ -24,6 +24,8 @@ import ManageAdmins from "../Pages/Dashboard/ManageAdmins";
 import Forbidden from "../Pages/Forbidden/Forbidden";
 import AdminRoute from "../Routes/AdminRoute";
 import AssignRider from "../Pages/Dashboard/AssignRider";
+import PendingDeliveries from "../Pages/Dashboard/PendingDeliveries";
+import RiderRoute from "../Routes/RiderRoute";
 
 export const router = createBrowserRouter([
   {
@@ -116,6 +118,12 @@ export const router = createBrowserRouter([
       {
         path: "update-profile",
         Component: UpdateProfile,
+      },
+      {
+        path: 'pending-deliveries',
+        element: <RiderRoute>
+          <PendingDeliveries></PendingDeliveries>
+        </RiderRoute>
       },
       {
         path: "pending-applications",

@@ -1,5 +1,5 @@
-import React from "react";
-import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { FaUserPlus } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/userAxiosSecure";
@@ -7,22 +7,83 @@ import useAxiosSecure from "../../Hooks/userAxiosSecure";
 const AssignRider = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: parcels = [], isLoading } = useQuery({
+  const {
+    data: parcels = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["assignable-parcels"],
     queryFn: async () => {
       const res = await axiosSecure.get("/parcel/assignable");
-      return res.data
-      
+      return res.data;
     },
   });
 
-  const handleAssignRider = (parcelId) => {
-    // You can open a modal or redirect to a rider selection component
-    Swal.fire("Assign Rider", `Assign rider for Parcel ID: ${parcelId}`, "info");
+  const assignMutation = useMutation({
+    mutationFn: async ({ parcelId, rider }) => {
+      const res = await axiosSecure.patch(`/parcel/${parcelId}/assigned`, rider);
+      return res.data;
+    },
+
+    onSuccess: (data) => {
+      if (data.parcelModified > 0) {
+        Swal.fire("Success", "Rider assigned successfully!", "success");
+        refetch();
+        setSelectedParcel(null);
+        document.getElementById("riderModal").close();
+      } else {
+        Swal.fire("Error", "Failed to assign rider", "error");
+      }
+    },
+
+    // onError: (error) => {
+    //   console.error(error);
+    //   Swal.fire("Error", "Something went wrong", "error");
+    // },
+  });
+
+  const [selectedParcel, setSelectedParcel] = useState(null);
+  const [riders, setRiders] = useState([]);
+  const [loadingRiders, setLoadingRiders] = useState(false);
+
+  const handleAssignRider = async (parcel) => {
+    setSelectedParcel(parcel);
+    setLoadingRiders(true);
+    try {
+      const res = await axiosSecure.get(
+        `/riders/available?district=${parcel.receiverDistrict}`
+      );
+      setRiders(res.data);
+    } catch (error) {
+      console.error("Failed to load riders", error);
+      Swal.fire("Error", "Could not load riders", "error");
+    } finally {
+      setLoadingRiders(false);
+    }
+
+    // Open modal manually
+    const modal = document.getElementById("riderModal");
+    if (modal) modal.showModal();
   };
 
+  const confirmAssign = (riderId) => {
+  const selectedRider = riders.find((rider) => rider._id === riderId);
+  if (!selectedRider) return;
+
+  assignMutation.mutate({
+    parcelId: selectedParcel._id,
+    rider: {
+      riderId: selectedRider._id,
+      riderName: selectedRider.name,
+      riderEmail: selectedRider.email,
+    },
+  });
+};
+
   if (isLoading) {
-    return <p className="text-center text-lg font-medium">Loading parcels...</p>;
+    return (
+      <p className="text-center text-lg font-medium">Loading parcels...</p>
+    );
   }
 
   return (
@@ -56,7 +117,7 @@ const AssignRider = () => {
                 <td>{parcel.delivery_status}</td>
                 <td>
                   <button
-                    onClick={() => handleAssignRider(parcel._id)}
+                    onClick={() => handleAssignRider(parcel)}
                     className="btn btn-sm bg-blue-500 text-white flex items-center gap-1"
                   >
                     <FaUserPlus />
@@ -67,7 +128,7 @@ const AssignRider = () => {
             ))}
             {parcels.length === 0 && (
               <tr>
-                <td colSpan="8" className="text-center py-4 text-gray-500">
+                <td colSpan="9" className="text-center py-4 text-gray-500">
                   No parcels found to assign
                 </td>
               </tr>
@@ -75,6 +136,53 @@ const AssignRider = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Modal */}
+      <dialog id="riderModal" className="modal">
+        <div className="modal-box max-w-2xl">
+          <h3 className="font-bold text-lg mb-2">
+            Assign Rider for Parcel: {selectedParcel?.title}
+          </h3>
+          {loadingRiders ? (
+            <p className="text-center">Loading available riders...</p>
+          ) : (
+            <>
+              {riders.length > 0 ? (
+                <ul className="space-y-2 max-h-60 overflow-y-auto">
+                  {riders.map((rider) => (
+                    <li
+                      key={rider._id}
+                      className="flex justify-between items-center border p-2 rounded"
+                    >
+                      <div>
+                        <p className="font-semibold">{rider.name}</p>
+                        <p className="text-sm text-gray-600">{rider.email}</p>
+                      </div>
+                      <button
+                        className="btn btn-sm bg-green-500 text-white"
+                        onClick={() => confirmAssign(rider._id)}
+                        disabled={assignMutation.isLoading}
+                      >
+                        {assignMutation.isLoading ? "Assigning..." : "Assign"}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>
+                  No available riders found in{" "}
+                  {selectedParcel?.receiverDistrict}
+                </p>
+              )}
+            </>
+          )}
+          <div className="modal-action">
+            <form method="dialog">
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
