@@ -21,6 +21,9 @@ import PendingRiders from "../Pages/Dashboard/PendingRiders";
 import ActiveRiders from "../Pages/Dashboard/ActiveRiders";
 import InactiveRiders from "../Pages/Dashboard/InactiveRiders";
 import ManageAdmins from "../Pages/Dashboard/ManageAdmins";
+import Forbidden from "../Pages/Forbidden/Forbidden";
+import AdminRoute from "../Routes/AdminRoute";
+import AssignRider from "../Pages/Dashboard/AssignRider";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +42,10 @@ export const router = createBrowserRouter([
         path: "/coverage",
         Component: Coverage,
         loader: () => fetch("./warehouses.json"),
+      },
+      {
+        path: 'forbidden',
+        Component: Forbidden
       },
       {
         path: "/pricing",
@@ -112,19 +119,33 @@ export const router = createBrowserRouter([
       },
       {
         path: "pending-applications",
-        Component: PendingRiders,
+        element: <AdminRoute>
+          <PendingRiders></PendingRiders>
+        </AdminRoute>
+      },
+      {
+        path:'assign-rider',
+        element: <AdminRoute>
+          <AssignRider></AssignRider>
+        </AdminRoute>
       },
       {
         path: "active-riders",
-        Component: ActiveRiders,
+        element: <AdminRoute>
+          <ActiveRiders></ActiveRiders>
+        </AdminRoute>
       },
       {
         path: "inactive-riders",
-        Component: InactiveRiders,
+        element: <AdminRoute>
+          <InactiveRiders></InactiveRiders>
+        </AdminRoute>
       },
       {
         path: "manage-admins",
-        Component: ManageAdmins,
+        element: <AdminRoute>
+          <ManageAdmins></ManageAdmins>
+        </AdminRoute>
       },
     ],
   },

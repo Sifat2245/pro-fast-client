@@ -10,18 +10,13 @@ import {
   FaClipboardList,
   FaMotorcycle,
   FaUserShield,
+  FaUserPlus,
 } from "react-icons/fa";
+import useUserRole from "../Hooks/useUserRole";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  //   const location = useLocation();
-  //   const navigate = useNavigate();
-
-  //   useEffect(() => {
-  //     if (location.pathname === "/dashboard") {
-  //       navigate("/dashboard/my-parcels", { replace: true });
-  //     }
-  //   }, [location, navigate]);
+  const { role, roleLoading } = useUserRole();
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
@@ -109,7 +104,85 @@ const DashboardLayout = () => {
               <FaUserEdit className="text-lg" />
               <span className="">Update Profile</span>
             </NavLink>
-            {/* Add more links later */}
+
+            {/* riders */}
+
+            {!roleLoading && role === "admin" && (
+              <>
+                <NavLink
+                  to="pending-applications"
+                  onClick={() => setSidebarOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                      isActive
+                        ? "bg-[#CAEB66] text-black font-semibold"
+                        : "text-white"
+                    }`
+                  }
+                >
+                  <FaClipboardList className="text-lg" />
+                  <span>Pending Applications</span>
+                </NavLink>
+
+                <NavLink
+                  to="assign-rider"
+                  onClick={() => setSidebarOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                      isActive
+                        ? "bg-[#CAEB66] text-black font-semibold"
+                        : "text-white"
+                    }`
+                  }
+                >
+                  <FaUserPlus className="text-lg" />
+                  <span>Assign Rider</span>
+                </NavLink>
+
+                <NavLink
+                  to="active-riders"
+                  onClick={() => setSidebarOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                      isActive
+                        ? "bg-[#CAEB66] text-black font-semibold"
+                        : "text-white"
+                    }`
+                  }
+                >
+                  <FaMotorcycle className="text-lg" />
+                  <span>Active Riders</span>
+                </NavLink>
+                <NavLink
+                  to="inactive-riders"
+                  onClick={() => setSidebarOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                      isActive
+                        ? "bg-[#CAEB66] text-black font-semibold"
+                        : "text-white"
+                    }`
+                  }
+                >
+                  <FaMotorcycle className="text-lg" />
+                  <span>Deactivated Riders</span>
+                </NavLink>
+                <NavLink
+                  to="manage-admins"
+                  onClick={() => setSidebarOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                      isActive
+                        ? "bg-[#CAEB66] text-black font-semibold"
+                        : "text-white"
+                    }`
+                  }
+                >
+                  <FaUserShield className="text-lg" />
+                  <span>Manage Admins</span>
+                </NavLink>
+              </>
+            )}
           </nav>
         </div>
       </div>
@@ -183,63 +256,82 @@ const DashboardLayout = () => {
 
           {/* riders */}
 
-          <NavLink
-            to="pending-applications"
-            onClick={() => setSidebarOpen(false)}
-            className={({ isActive }) =>
-              `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
-                isActive
-                  ? "bg-[#CAEB66] text-black font-semibold"
-                  : "text-white"
-              }`
-            }
-          >
-            <FaClipboardList className="text-lg" />
-            <span>Pending Applications</span>
-          </NavLink>
+          {!roleLoading && role === "admin" && (
+            <>
+              <NavLink
+                to="pending-applications"
+                onClick={() => setSidebarOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                    isActive
+                      ? "bg-[#CAEB66] text-black font-semibold"
+                      : "text-white"
+                  }`
+                }
+              >
+                <FaClipboardList className="text-lg" />
+                <span>Pending Applications</span>
+              </NavLink>
 
-          <NavLink
-            to="active-riders"
-            onClick={() => setSidebarOpen(false)}
-            className={({ isActive }) =>
-              `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
-                isActive
-                  ? "bg-[#CAEB66] text-black font-semibold"
-                  : "text-white"
-              }`
-            }
-          >
-            <FaMotorcycle className="text-lg" />
-            <span>Active Riders</span>
-          </NavLink>
-          <NavLink
-            to="inactive-riders"
-            onClick={() => setSidebarOpen(false)}
-            className={({ isActive }) =>
-              `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
-                isActive
-                  ? "bg-[#CAEB66] text-black font-semibold"
-                  : "text-white"
-              }`
-            }
-          >
-            <FaMotorcycle className="text-lg" />
-            <span>Deactivated Riders</span>
-          </NavLink>
-          <NavLink
-            to="manage-admins"
-            onClick={() => setSidebarOpen(false)}
-            className={({ isActive }) =>
-              `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
-                isActive
-                  ? "bg-[#CAEB66] text-black font-semibold"
-                  : "text-white"
-              }`
-            }
-          >
-            <FaUserShield className="text-lg" />
-            <span>Manage Admins</span>
-          </NavLink>
+              <NavLink
+                to="assign-rider"
+                onClick={() => setSidebarOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                    isActive
+                      ? "bg-[#CAEB66] text-black font-semibold"
+                      : "text-white"
+                  }`
+                }
+              >
+                <FaUserPlus className="text-lg" />
+                <span>Assign Rider</span>
+              </NavLink>
+
+              <NavLink
+                to="active-riders"
+                onClick={() => setSidebarOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                    isActive
+                      ? "bg-[#CAEB66] text-black font-semibold"
+                      : "text-white"
+                  }`
+                }
+              >
+                <FaMotorcycle className="text-lg" />
+                <span>Active Riders</span>
+              </NavLink>
+              <NavLink
+                to="inactive-riders"
+                onClick={() => setSidebarOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                    isActive
+                      ? "bg-[#CAEB66] text-black font-semibold"
+                      : "text-white"
+                  }`
+                }
+              >
+                <FaMotorcycle className="text-lg" />
+                <span>Deactivated Riders</span>
+              </NavLink>
+              <NavLink
+                to="manage-admins"
+                onClick={() => setSidebarOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                    isActive
+                      ? "bg-[#CAEB66] text-black font-semibold"
+                      : "text-white"
+                  }`
+                }
+              >
+                <FaUserShield className="text-lg" />
+                <span>Manage Admins</span>
+              </NavLink>
+            </>
+          )}
         </nav>
       </aside>
 
