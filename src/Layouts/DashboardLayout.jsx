@@ -12,6 +12,7 @@ import {
   FaUserShield,
   FaUserPlus,
   FaTruckLoading,
+  FaCheckCircle,
 } from "react-icons/fa";
 import useUserRole from "../Hooks/useUserRole";
 
@@ -270,6 +271,20 @@ const DashboardLayout = () => {
               >
                 <FaTruckLoading className="text-lg" />
                 <span>Pending Deliveries</span>
+              </NavLink>
+              <NavLink
+                to="completed-deliveries"
+                onClick={() => setSidebarOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                    isActive
+                      ? "bg-[#CAEB66] text-black font-semibold"
+                      : "text-white"
+                  }`
+                }
+              >
+                <FaCheckCircle className="text-lg" />
+                <span>Completed Deliveries</span>
               </NavLink>
             </>
           )}
