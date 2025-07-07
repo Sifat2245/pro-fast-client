@@ -27,6 +27,9 @@ import AssignRider from "../Pages/Dashboard/AssignRider";
 import PendingDeliveries from "../Pages/Dashboard/PendingDeliveries";
 import RiderRoute from "../Routes/RiderRoute";
 import CompletedDeliveries from "../Pages/Dashboard/CompletedDeliveries";
+import MyEarnings from "../Pages/Dashboard/MyEarnings";
+import WithdrawalHistory from "../Pages/Dashboard/WithdrawalHistory";
+import PaymentRequest from "../Pages/Dashboard/PaymentRequest";
 
 export const router = createBrowserRouter([
   {
@@ -133,6 +136,18 @@ export const router = createBrowserRouter([
         </RiderRoute>
       },
       {
+        path: 'my-earnings',
+        element: <RiderRoute>
+          <MyEarnings></MyEarnings>
+        </RiderRoute>
+      },
+      {
+        path: 'withdrawal-history',
+        element: <RiderRoute>
+          <WithdrawalHistory></WithdrawalHistory>
+        </RiderRoute>
+      },
+      {
         path: "pending-applications",
         element: <AdminRoute>
           <PendingRiders></PendingRiders>
@@ -154,6 +169,12 @@ export const router = createBrowserRouter([
         path: "inactive-riders",
         element: <AdminRoute>
           <InactiveRiders></InactiveRiders>
+        </AdminRoute>
+      },
+      {
+        path: 'payment-requests',
+        element: <AdminRoute>
+          <PaymentRequest></PaymentRequest>
         </AdminRoute>
       },
       {
