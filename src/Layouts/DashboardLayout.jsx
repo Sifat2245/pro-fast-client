@@ -13,6 +13,9 @@ import {
   FaUserPlus,
   FaTruckLoading,
   FaCheckCircle,
+  FaMoneyBillWave,
+  FaHistory,
+  FaFileInvoiceDollar,
 } from "react-icons/fa";
 import useUserRole from "../Hooks/useUserRole";
 
@@ -286,6 +289,34 @@ const DashboardLayout = () => {
                 <FaCheckCircle className="text-lg" />
                 <span>Completed Deliveries</span>
               </NavLink>
+              <NavLink
+                to="my-earnings"
+                onClick={() => setSidebarOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                    isActive
+                      ? "bg-[#CAEB66] text-black font-semibold"
+                      : "text-white"
+                  }`
+                }
+              >
+                <FaMoneyBillWave className="text-lg" />
+                <span>My Earnings</span>
+              </NavLink>
+              <NavLink
+                to="withdrawal-history"
+                onClick={() => setSidebarOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                    isActive
+                      ? "bg-[#CAEB66] text-black font-semibold"
+                      : "text-white"
+                  }`
+                }
+              >
+                <FaHistory className="text-lg" />
+                <span>Withdrawal History</span>
+              </NavLink>
             </>
           )}
 
@@ -350,6 +381,20 @@ const DashboardLayout = () => {
               >
                 <FaMotorcycle className="text-lg" />
                 <span>Deactivated Riders</span>
+              </NavLink>
+              <NavLink
+                to="payment-requests"
+                onClick={() => setSidebarOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-2 px-4 py-2 rounded transition hover:bg-[#2c2c2c] ${
+                    isActive
+                      ? "bg-[#CAEB66] text-black font-semibold"
+                      : "text-white"
+                  }`
+                }
+              >
+                <FaFileInvoiceDollar className="text-lg" />
+                <span>Payment Requests</span>
               </NavLink>
               <NavLink
                 to="manage-admins"
